@@ -1,0 +1,1767 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SPACE - Scaled Platform Advanced Cognitive Experience</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: #000;
+            color: white;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* Professional Animated Background */
+        .animated-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 20%, #334155 40%, #475569 60%, #1e293b 80%, #0f172a 100%);
+            background-size: 400% 400%;
+            animation: gradientShift 25s ease infinite;
+        }
+
+        .animated-bg::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(circle at 20% 80%, rgba(59, 130, 246, 0.12) 0%, transparent 50%),
+                        radial-gradient(circle at 80% 20%, rgba(16, 185, 129, 0.08) 0%, transparent 50%),
+                        radial-gradient(circle at 40% 40%, rgba(139, 92, 246, 0.06) 0%, transparent 50%);
+            animation: float 30s ease-in-out infinite;
+        }
+
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        @keyframes float {
+            0%, 100% { transform: scale(1) rotate(0deg); opacity: 0.6; }
+            33% { transform: scale(1.05) rotate(60deg); opacity: 0.8; }
+            66% { transform: scale(0.95) rotate(120deg); opacity: 0.4; }
+        }
+
+        /* Enhanced Particle System */
+        .particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+        }
+
+        .particle {
+            position: absolute;
+            width: 3px;
+            height: 3px;
+            background: rgba(59, 130, 246, 0.6);
+            border-radius: 50%;
+            animation: particleFloat 8s infinite linear;
+            box-shadow: 0 0 6px rgba(59, 130, 246, 0.4);
+        }
+
+        @keyframes particleFloat {
+            0% {
+                transform: translateY(100vh) scale(0);
+                opacity: 0;
+            }
+            10% {
+                opacity: 0.8;
+            }
+            90% {
+                opacity: 0.8;
+            }
+            100% {
+                transform: translateY(-100px) scale(1);
+                opacity: 0;
+            }
+        }
+
+        .navbar {
+            background: rgba(15, 23, 42, 0.95);
+            backdrop-filter: blur(20px);
+            padding: 1rem 2rem;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            border-bottom: 1px solid rgba(59, 130, 246, 0.2);
+            transition: all 0.3s ease;
+        }
+
+        .navbar.scrolled {
+            background: rgba(15, 23, 42, 0.98);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+        }
+
+        .nav-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 2.2rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #3b82f6, #10b981, #06b6d4);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-shadow: 0 0 20px rgba(59, 130, 246, 0.3);
+            animation: logoGlow 4s ease-in-out infinite alternate;
+        }
+
+        @keyframes logoGlow {
+            from { filter: brightness(1); }
+            to { filter: brightness(1.15); }
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: #e2e8f0;
+            text-decoration: none;
+            font-weight: 500;
+            position: relative;
+            transition: all 0.3s ease;
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+        }
+
+        .nav-links a::before {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(90deg, #3b82f6, #10b981);
+            transition: all 0.3s ease;
+            transform: translateX(-50%);
+        }
+
+        .nav-links a:hover {
+            background: rgba(59, 130, 246, 0.15);
+            color: #3b82f6;
+            transform: translateY(-1px);
+        }
+
+        .nav-links a:hover::before {
+            width: 80%;
+        }
+
+        .hero {
+            padding: 120px 2rem 80px;
+            text-align: center;
+            position: relative;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .hero-content {
+            max-width: 900px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero h1 {
+            font-size: 4.8rem;
+            font-weight: 800;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, #3b82f6, #10b981, #06b6d4);
+            background-size: 200% 200%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: gradientShift 4s ease infinite;
+            text-shadow: 0 0 40px rgba(59, 130, 246, 0.3);
+            letter-spacing: -1px;
+        }
+
+        .hero-subtitle {
+            font-size: 1.6rem;
+            margin-bottom: 2rem;
+            background: linear-gradient(90deg, #06b6d4, #10b981);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            font-weight: 500;
+            opacity: 0.95;
+        }
+
+        .hero-description {
+            font-size: 1.1rem;
+            line-height: 1.7;
+            margin-bottom: 3rem;
+            color: #cbd5e1;
+            backdrop-filter: blur(15px);
+            background: rgba(30, 41, 59, 0.4);
+            padding: 2.5rem;
+            border-radius: 16px;
+            border: 1px solid rgba(59, 130, 246, 0.2);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        .cta-button {
+            background: linear-gradient(135deg, #3b82f6, #10b981);
+            background-size: 200% 200%;
+            border: none;
+            padding: 18px 45px;
+            border-radius: 12px;
+            color: white;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+            box-shadow: 0 12px 30px rgba(59, 130, 246, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cta-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .cta-button:hover::before {
+            left: 100%;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 18px 40px rgba(59, 130, 246, 0.4);
+        }
+
+        .section {
+            padding: 100px 2rem;
+            position: relative;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            font-size: 3.2rem;
+            text-align: center;
+            margin-bottom: 4rem;
+            background: linear-gradient(135deg, #3b82f6, #10b981);
+            background-size: 200% 200%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: gradientShift 6s ease infinite;
+            font-weight: 700;
+            position: relative;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            width: 80px;
+            height: 3px;
+            background: linear-gradient(90deg, #3b82f6, #10b981);
+            transform: translateX(-50%);
+            border-radius: 2px;
+        }
+
+        .team-showcase {
+            background: rgba(30, 41, 59, 0.5);
+            border-radius: 20px;
+            padding: 3rem;
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(59, 130, 246, 0.3);
+            margin-bottom: 4rem;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.5s ease;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+        }
+
+        .team-showcase::before {
+            content: '';
+            position: absolute;
+            top: -2px;
+            left: -2px;
+            right: -2px;
+            bottom: -2px;
+            background: linear-gradient(45deg, #3b82f6, #10b981, #06b6d4, #3b82f6);
+            background-size: 400% 400%;
+            animation: gradientShift 8s ease infinite;
+            z-index: -1;
+            border-radius: 22px;
+        }
+
+        .team-showcase::after {
+            content: '';
+            position: absolute;
+            top: 1px;
+            left: 1px;
+            right: 1px;
+            bottom: 1px;
+            background: rgba(15, 23, 42, 0.95);
+            border-radius: 19px;
+            z-index: -1;
+        }
+
+        .team-showcase:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.3);
+        }
+
+        .team-image {
+            width: 100%;
+            height: 350px;
+            background: linear-gradient(135deg, rgba(59, 130, 246, 0.15), rgba(16, 185, 129, 0.1));
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 2rem;
+            position: relative;
+            overflow: hidden;
+            border: 1px solid rgba(59, 130, 246, 0.3);
+        }
+
+        .team-placeholder {
+            font-size: 1.2rem;
+            text-align: center;
+            z-index: 1;
+            color: #e2e8f0;
+        }
+
+        .benefits-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+            margin: 4rem 0;
+        }
+
+        .benefit-card {
+            background: rgba(30, 41, 59, 0.5);
+            border-radius: 20px;
+            padding: 2.5rem;
+            text-align: center;
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(59, 130, 246, 0.2);
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+            cursor: pointer;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+        }
+
+        .benefit-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(59, 130, 246, 0.1), transparent);
+            transition: left 0.6s ease;
+        }
+
+        .benefit-card:hover::before {
+            left: 100%;
+        }
+
+        .benefit-card:hover {
+            transform: translateY(-10px) rotateY(5deg) rotateX(5deg);
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.25);
+            border-color: rgba(59, 130, 246, 0.4);
+            background: rgba(30, 41, 59, 0.7);
+        }
+
+        .benefit-icon {
+            width: 85px;
+            height: 85px;
+            background: linear-gradient(135deg, #3b82f6, #10b981);
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 2rem;
+            font-size: 2.2rem;
+            box-shadow: 0 12px 25px rgba(59, 130, 246, 0.25);
+            transition: all 0.3s ease;
+        }
+
+        .benefit-card:hover .benefit-icon {
+            transform: rotateY(180deg) scale(1.1);
+            box-shadow: 0 18px 35px rgba(59, 130, 246, 0.35);
+        }
+
+        .benefit-card h3 {
+            font-size: 1.4rem;
+            margin-bottom: 1.5rem;
+            color: #3b82f6;
+            font-weight: 600;
+        }
+
+        .benefit-card p {
+            color: #e2e8f0;
+            line-height: 1.6;
+            font-size: 1rem;
+        }
+
+        .business-lines {
+            padding: 100px 2rem;
+            background: rgba(15, 23, 42, 0.4);
+            position: relative;
+        }
+
+        .business-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 2rem;
+            margin-top: 4rem;
+        }
+
+        .business-card {
+            background: rgba(30, 41, 59, 0.5);
+            border-radius: 20px;
+            overflow: hidden;
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(59, 130, 246, 0.2);
+            transition: all 0.4s ease;
+            position: relative;
+            cursor: pointer;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+        }
+
+        .business-card:hover {
+            transform: scale(1.03) translateY(-8px) rotateY(3deg);
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.3);
+            border-color: rgba(59, 130, 246, 0.4);
+        }
+
+        .business-header {
+            height: 160px;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+
+        .health { 
+            background: linear-gradient(135deg, #06b6d4, #3b82f6);
+            background-size: 200% 200%;
+            animation: gradientShift 12s ease infinite;
+        }
+        .media { 
+            background: linear-gradient(135deg, #8b5cf6, #3b82f6);
+            background-size: 200% 200%;
+            animation: gradientShift 14s ease infinite;
+        }
+        .hitech { 
+            background: linear-gradient(135deg, #3b82f6, #1e40af);
+            background-size: 200% 200%;
+            animation: gradientShift 10s ease infinite;
+        }
+        .insurance { 
+            background: linear-gradient(135deg, #10b981, #059669);
+            background-size: 200% 200%;
+            animation: gradientShift 16s ease infinite;
+        }
+
+        .business-title {
+            background: rgba(15, 23, 42, 0.9);
+            color: white;
+            padding: 1rem 1.5rem;
+            border-radius: 12px;
+            font-weight: 600;
+            font-size: 1.1rem;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(59, 130, 246, 0.3);
+            backdrop-filter: blur(10px);
+        }
+
+        .business-content {
+            padding: 2rem;
+            text-align: center;
+        }
+
+        .leadership-tag {
+            background: linear-gradient(135deg, #3b82f6, #10b981);
+            color: white;
+            padding: 0.8rem 1.5rem;
+            border-radius: 12px;
+            font-size: 0.95rem;
+            font-weight: 500;
+            box-shadow: 0 8px 20px rgba(59, 130, 246, 0.25);
+            transition: all 0.3s ease;
+            cursor: pointer;
+            margin-bottom: 1rem;
+        }
+
+        .business-card:hover .leadership-tag {
+            transform: scale(1.02);
+            box-shadow: 0 12px 25px rgba(59, 130, 246, 0.35);
+        };
+            margin-bottom: 2rem;
+            position: relative;
+            overflow: hidden;
+            border: 1px solid rgba(148, 163, 184, 0.2);
+        }
+
+        .team-placeholder {
+            font-size: 1.2rem;
+            text-align: center;
+            z-index: 1;
+            color: #cbd5e1;
+        }
+
+        .benefits-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+            margin: 4rem 0;
+        }
+
+        .benefit-card {
+            background: rgba(30, 41, 59, 0.4);
+            border-radius: 20px;
+            padding: 2.5rem;
+            text-align: center;
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(148, 163, 184, 0.2);
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+            cursor: pointer;
+        }
+
+        .benefit-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(59, 130, 246, 0.1), transparent);
+            transition: left 0.6s ease;
+        }
+
+        .benefit-card:hover::before {
+            left: 100%;
+        }
+
+        .benefit-card:hover {
+            transform: translateY(-8px) rotateY(5deg) rotateX(5deg);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+            border-color: rgba(59, 130, 246, 0.4);
+            background: rgba(30, 41, 59, 0.6);
+        }
+
+        .benefit-icon {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 2rem;
+            font-size: 2rem;
+            box-shadow: 0 10px 20px rgba(59, 130, 246, 0.2);
+            transition: all 0.3s ease;
+        }
+
+        .benefit-card:hover .benefit-icon {
+            transform: rotateY(180deg) scale(1.1);
+            box-shadow: 0 15px 30px rgba(59, 130, 246, 0.3);
+        }
+
+        .benefit-card h3 {
+            font-size: 1.4rem;
+            margin-bottom: 1.5rem;
+            color: #3b82f6;
+            font-weight: 600;
+        }
+
+        .benefit-card p {
+            color: #cbd5e1;
+            line-height: 1.6;
+            font-size: 1rem;
+        }
+
+        .business-lines {
+            padding: 100px 2rem;
+            background: rgba(15, 23, 42, 0.3);
+            position: relative;
+        }
+
+        .business-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 2rem;
+            margin-top: 4rem;
+        }
+
+        .business-card {
+            background: rgba(30, 41, 59, 0.4);
+            border-radius: 20px;
+            overflow: hidden;
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(148, 163, 184, 0.2);
+            transition: all 0.4s ease;
+            position: relative;
+            cursor: pointer;
+        }
+
+        .business-card:hover {
+            transform: scale(1.02) translateY(-5px) rotateY(3deg);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        .business-header {
+            height: 160px;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+
+        .health { 
+            background: linear-gradient(135deg, #06b6d4, #3b82f6);
+            background-size: 200% 200%;
+            animation: gradientShift 12s ease infinite;
+        }
+        .media { 
+            background: linear-gradient(135deg, #8b5cf6, #a855f7);
+            background-size: 200% 200%;
+            animation: gradientShift 14s ease infinite;
+        }
+        .hitech { 
+            background: linear-gradient(135deg, #3b82f6, #1d4ed8);
+            background-size: 200% 200%;
+            animation: gradientShift 10s ease infinite;
+        }
+        .insurance { 
+            background: linear-gradient(135deg, #10b981, #059669);
+            background-size: 200% 200%;
+            animation: gradientShift 16s ease infinite;
+        }
+
+        .business-title {
+            background: rgba(15, 23, 42, 0.9);
+            color: white;
+            padding: 1rem 1.5rem;
+            border-radius: 12px;
+            font-weight: 600;
+            font-size: 1.1rem;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(148, 163, 184, 0.3);
+        }
+
+        .business-content {
+            padding: 2rem;
+            text-align: center;
+        }
+
+        .leadership-tag {
+            background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+            color: white;
+            padding: 0.8rem 1.5rem;
+            border-radius: 12px;
+            font-size: 0.95rem;
+            font-weight: 500;
+            box-shadow: 0 8px 16px rgba(59, 130, 246, 0.2);
+            transition: all 0.3s ease;
+            cursor: pointer;
+            margin-bottom: 1rem;
+        }
+
+        .business-card:hover .leadership-tag {
+            transform: scale(1.02);
+            box-shadow: 0 10px 20px rgba(59, 130, 246, 0.3);
+        }
+            z-index: 1;
+        }
+
+        .benefits-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2.5rem;
+            margin: 4rem 0;
+        }
+
+        .benefit-card {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 25px;
+            padding: 2.5rem;
+            text-align: center;
+            backdrop-filter: blur(20px);
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+            cursor: pointer;
+        }
+
+        .benefit-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.6s ease;
+        }
+
+        .benefit-card:hover::before {
+            left: 100%;
+        }
+
+        .benefit-card:hover {
+            transform: translateY(-15px) scale(1.03);
+            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.3);
+            border-color: rgba(255, 0, 110, 0.5);
+            background: rgba(255, 255, 255, 0.15);
+        }
+
+        .benefit-icon {
+            width: 100px;
+            height: 100px;
+            background: linear-gradient(45deg, #ff006e, #8338ec, #3a86ff);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 2rem;
+            font-size: 2.5rem;
+            box-shadow: 0 15px 30px rgba(255, 0, 110, 0.3);
+            transition: all 0.3s ease;
+        }
+
+        .benefit-card:hover .benefit-icon {
+            transform: rotateY(180deg) scale(1.1);
+            box-shadow: 0 20px 40px rgba(255, 0, 110, 0.5);
+        }
+
+        .benefit-card h3 {
+            font-size: 1.6rem;
+            margin-bottom: 1.5rem;
+            background: linear-gradient(45deg, #06ffa5, #ffbe0b);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            font-weight: 700;
+        }
+
+        .benefit-card p {
+            color: rgba(255, 255, 255, 0.9);
+            line-height: 1.7;
+            font-size: 1.1rem;
+        }
+
+        .business-lines {
+            padding: 100px 2rem;
+            background: rgba(0, 0, 0, 0.5);
+            position: relative;
+        }
+
+        .business-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 2.5rem;
+            margin-top: 4rem;
+        }
+
+        .business-card {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 25px;
+            overflow: hidden;
+            backdrop-filter: blur(20px);
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            transition: all 0.4s ease;
+            position: relative;
+            cursor: pointer;
+        }
+
+        .business-card:hover {
+            transform: scale(1.05) translateY(-10px);
+            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.4);
+        }
+
+        .business-header {
+            height: 180px;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+
+        .health { 
+            background: linear-gradient(135deg, #00f5ff, #00d4aa, #7c4dff);
+            background-size: 400% 400%;
+            animation: gradientShift 8s ease infinite;
+        }
+        .media { 
+            background: linear-gradient(135deg, #ff6b35, #f7931e, #ffbe0b);
+            background-size: 400% 400%;
+            animation: gradientShift 7s ease infinite;
+        }
+        .hitech { 
+            background: linear-gradient(135deg, #4facfe, #00f2fe, #43e97b);
+            background-size: 400% 400%;
+            animation: gradientShift 9s ease infinite;
+        }
+        .insurance { 
+            background: linear-gradient(135deg, #a8edea, #fed6e3, #d299c2);
+            background-size: 400% 400%;
+            animation: gradientShift 6s ease infinite;
+        }
+        .bfs { 
+            background: linear-gradient(135deg, #667eea, #764ba2, #f093fb);
+            background-size: 400% 400%;
+            animation: gradientShift 10s ease infinite;
+        }
+
+        .business-title {
+            background: rgba(0, 0, 0, 0.8);
+            color: white;
+            padding: 1rem 2rem;
+            border-radius: 15px;
+            font-weight: 700;
+            font-size: 1.2rem;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+            border: 2px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .business-content {
+            padding: 2rem;
+            text-align: center;
+        }
+
+        .leadership-tag {
+            background: linear-gradient(45deg, #ff006e, #8338ec);
+            color: white;
+            padding: 1rem 2rem;
+            border-radius: 25px;
+            font-size: 1rem;
+            font-weight: 600;
+            box-shadow: 0 10px 20px rgba(255, 0, 110, 0.3);
+            transition: all 0.3s ease;
+            cursor: pointer;
+            margin-bottom: 1rem;
+        }
+
+        .business-card:hover .leadership-tag {
+            transform: scale(1.05);
+            box-shadow: 0 15px 30px rgba(255, 0, 110, 0.5);
+        }
+
+        .team-members {
+            display: none;
+            margin-top: 1.5rem;
+            padding: 1.5rem;
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 15px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .team-members.show {
+            display: block;
+            animation: slideDown 0.5s ease;
+        }
+
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .team-section-title {
+            font-size: 1.1rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: #06ffa5;
+            text-align: left;
+        }
+
+        .team-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .team-member {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 0.8rem;
+            border-radius: 10px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .team-member:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateY(-2px);
+        }
+
+        .pm-badge {
+            background: linear-gradient(45deg, #3a86ff, #06ffa5);
+            color: white;
+            padding: 0.2rem 0.5rem;
+            border-radius: 12px;
+            font-size: 0.7rem;
+            margin-right: 0.5rem;
+            font-weight: 600;
+        }
+
+        .dm-badge {
+            background: linear-gradient(45deg, #ff006e, #ffbe0b);
+            color: white;
+            padding: 0.2rem 0.5rem;
+            border-radius: 12px;
+            font-size: 0.7rem;
+            margin-right: 0.5rem;
+            font-weight: 600;
+        }
+
+        .expand-btn {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+            margin-left: 0.5rem;
+        }
+
+        .expand-btn.rotated {
+            transform: rotate(180deg);
+        }
+
+        .customer-list {
+            display: none;
+            margin-top: 0.5rem;
+            padding: 0.8rem;
+            background: rgba(0, 0, 0, 0.4);
+            border-radius: 8px;
+            border-left: 3px solid #06ffa5;
+        }
+
+        .customer-list.show {
+            display: block;
+            animation: fadeIn 0.3s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .customer-item {
+            font-size: 0.8rem;
+            color: rgba(255, 255, 255, 0.9);
+            margin-bottom: 0.3rem;
+            padding: 0.3rem 0.5rem;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 5px;
+            border-left: 2px solid rgba(6, 255, 165, 0.5);
+        }
+
+        .customer-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .dm-expand-btn {
+            background: none;
+            border: none;
+            color: #06ffa5;
+            font-size: 0.8rem;
+            cursor: pointer;
+            float: right;
+            transition: transform 0.3s ease;
+        }
+
+        .dm-expand-btn.rotated {
+            transform: rotate(180deg);
+        }
+
+        .footer {
+            background: rgba(0, 0, 0, 0.9);
+            padding: 4rem 2rem 2rem;
+            text-align: center;
+            border-top: 2px solid rgba(255, 255, 255, 0.2);
+            position: relative;
+        }
+
+        .footer::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: linear-gradient(90deg, #ff006e, #8338ec, #3a86ff, #06ffa5, #ffbe0b);
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 3rem;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .footer-links a {
+            color: rgba(255, 255, 255, 0.8);
+            text-decoration: none;
+            transition: all 0.3s ease;
+            font-weight: 600;
+            position: relative;
+        }
+
+        .footer-links a::before {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(45deg, #ff006e, #3a86ff);
+            transition: width 0.3s ease;
+        }
+
+        .footer-links a:hover {
+            color: #ff006e;
+            transform: translateY(-2px);
+        }
+
+        .footer-links a:hover::before {
+            width: 100%;
+        }
+
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 3rem;
+            }
+            
+            .nav-links {
+                display: none;
+            }
+            
+            .benefits-grid,
+            .business-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .section-title {
+                font-size: 2.5rem;
+            }
+        }
+
+        .animate-on-scroll {
+            opacity: 0;
+            transform: translateY(50px);
+            transition: all 0.8s ease;
+        }
+
+        .animate-on-scroll.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Glowing text effect */
+        .glow-text {
+            text-shadow: 0 0 10px rgba(255, 0, 110, 0.5),
+                         0 0 20px rgba(255, 0, 110, 0.3),
+                         0 0 30px rgba(255, 0, 110, 0.2);
+        }
+    </style>
+</head>
+<body>
+    <div class="animated-bg"></div>
+    <div class="particles" id="particles"></div>
+
+    <nav class="navbar" id="navbar">
+        <div class="nav-content">
+            <div class="logo glow-text">SPACE</div>
+            <ul class="nav-links">
+                <li><a href="#home">Home</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#services">Services</a></li>
+                <li><a href="#team">Team</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <section class="hero" id="home">
+        <div class="hero-content">
+            <h1 class="glow-text">SPACE</h1>
+            <div class="hero-subtitle">Inspire | Innovate | Illuminate</div>
+            <p class="hero-description">
+                Scaled Platform Advanced Cognitive Experience - A premier framework meticulously crafted to deliver unparalleled, comprehensive end-to-end infrastructure support. We provide exemplary standard services while seamlessly accommodating shared, hybrid, and dedicated models.
+            </p>
+            <a href="#about" class="cta-button">🚀 Discover the Future</a>
+        </div>
+    </section>
+
+    <section class="section" id="team">
+        <div class="container">
+            <h2 class="section-title animate-on-scroll">✨ Meet Our Dream Team</h2>
+            <div class="team-showcase animate-on-scroll">
+                <div class="team-image">
+                    <div class="team-placeholder">
+                        <div style="font-size: 4rem; margin-bottom: 1rem;">🌟👥🌟</div>
+                        <div style="font-size: 1.5rem; font-weight: 700; margin-bottom: 0.5rem;">Our Diverse & Brilliant Team</div>
+                        <div style="opacity: 0.8;">Innovators • Visionaries • Game Changers</div>
+                    </div>
+                </div>
+                <p style="text-align: center; color: rgba(255, 255, 255, 0.9); font-size: 1.2rem; font-weight: 500;">
+                    Our team consists of industry pioneers and leaders dedicated to pushing the boundaries of cognitive infrastructure services and creating tomorrow's solutions today! 🚀
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <section class="section" id="about">
+        <div class="container">
+            <h2 class="section-title animate-on-scroll">🔥 Why Choose SPACE?</h2>
+            <div class="benefits-grid">
+                <div class="benefit-card animate-on-scroll">
+                    <div class="benefit-icon">💎</div>
+                    <h3>Reduced Cost of Ownership</h3>
+                    <p>Revolutionary pricing models that maximize your ROI while delivering enterprise-grade value across all service tiers.</p>
+                </div>
+                <div class="benefit-card animate-on-scroll">
+                    <div class="benefit-icon">⚡</div>
+                    <h3>Platform Availability</h3>
+                    <p>Cutting-edge tools and platforms tailored to your exact requirements, ensuring optimal resource allocation and peak performance.</p>
+                </div>
+                <div class="benefit-card animate-on-scroll">
+                    <div class="benefit-icon">🎯</div>
+                    <h3>Flexible Delivery Model</h3>
+                    <p>Choose from shared, hybrid, and dedicated models - each expertly designed to match your unique business objectives.</p>
+                </div>
+                <div class="benefit-card animate-on-scroll">
+                    <div class="benefit-icon">🏆</div>
+                    <h3>Operational Excellence</h3>
+                    <p>Industry-leading best practices with standardized metrics and real-time performance monitoring across all touchpoints.</p>
+                </div>
+                <div class="benefit-card animate-on-scroll">
+                    <div class="benefit-icon">🚀</div>
+                    <h3>Infinite Scalability</h3>
+                    <p>Lightning-fast deployment with our expert talent pool and diverse skill sets for immediate project launches.</p>
+                </div>
+                <div class="benefit-card animate-on-scroll">
+                    <div class="benefit-icon">🌐</div>
+                    <h3>Global NOC Network</h3>
+                    <p>4 dedicated Network Operations Centers providing instant onboarding, 24/7 monitoring, and worldwide coverage.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="business-lines section" id="services">
+        <div class="container">
+            <h2 class="section-title animate-on-scroll">🌈 Business Verticals & Leadership</h2>
+            <div class="business-grid">
+                <div class="business-card animate-on-scroll">
+                    <div class="business-header health">
+                        <div class="business-title">🏥 Health, CME & HiTech</div>
+                    </div>
+                    <div class="business-content">
+                        <div class="leadership-tag" onclick="toggleTeamMembers('health')">
+                            Customer & Leadership Excellence Team
+                            <button class="expand-btn" id="health-btn">▼</button>
+                        </div>
+                        <div class="team-members" id="health-team">
+                            <div class="team-section-title">👤 Project Manager</div>
+                            <div class="team-grid" style="grid-template-columns: 1fr;">
+                                <div class="team-member"><span class="pm-badge">PM</span>Randeep Pattnaik</div>
+                            </div>
+                            <div class="team-section-title">🎯 Delivery Managers & Their Customers</div>
+                            <div class="team-grid">
+                                <div class="team-member">
+                                    <div onclick="toggleCustomers('siva-health')">
+                                        <span class="dm-badge">DM</span>Siva
+                                        <button class="dm-expand-btn" id="siva-health-btn">▼</button>
+                                    </div>
+                                    <div class="customer-list" id="siva-health-customers">
+                                        <div class="customer-item">🏥 Convo Communications LLC</div>
+                                        <div class="customer-item">🏥 Edgewood Partners Insurance Center</div>
+                                        <div class="customer-item">🏥 Warner Media LLC</div>
+                                    </div>
+                                </div>
+                                <div class="team-member">
+                                    <div onclick="toggleCustomers('deepak')">
+                                        <span class="dm-badge">DM</span>Deepak Chandel
+                                        <button class="dm-expand-btn" id="deepak-btn">▼</button>
+                                    </div>
+                                    <div class="customer-list" id="deepak-customers">
+                                        <div class="customer-item">🏥 Telia Sverige AB</div>
+                                        <div class="customer-item">🏥 Harvard Business School</div>
+                                        <div class="customer-item">🏥 F-Secure Corporation</div>
+                                    </div>
+                                </div>
+                                <div class="team-member">
+                                    <div onclick="toggleCustomers('roopesh')">
+                                        <span class="dm-badge">DM</span>Roopesh KR
+                                        <button class="dm-expand-btn" id="roopesh-btn">▼</button>
+                                    </div>
+                                    <div class="customer-list" id="roopesh-customers">
+                                        <div class="customer-item">🏥 F-Secure Corporation</div>
+                                        <div class="customer-item">🏥 Informa UK Limited</div>
+                                        <div class="customer-item">🏥 F-Secure Corporation (IRT)</div>
+                                    </div>
+                                </div>
+                                <div class="team-member">
+                                    <div onclick="toggleCustomers('santosa')">
+                                        <span class="dm-badge">DM</span>Santosa
+                                        <button class="dm-expand-btn" id="santosa-btn">▼</button>
+                                    </div>
+                                    <div class="customer-list" id="santosa-customers">
+                                        <div class="customer-item">🏥 Association of American Medical Col</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="business-card animate-on-scroll">
+                    <div class="business-header media">
+                        <div class="business-title">🏭 RCG, EY & MFG</div>
+                    </div>
+                    <div class="business-content">
+                        <div class="leadership-tag" onclick="toggleTeamMembers('media')">
+                            Customer & Leadership Excellence Team
+                            <button class="expand-btn" id="media-btn">▼</button>
+                        </div>
+                        <div class="team-members" id="media-team">
+                            <div class="team-section-title">👤 Project Manager</div>
+                            <div class="team-grid" style="grid-template-columns: 1fr;">
+                                <div class="team-member"><span class="pm-badge">PM</span>RaviKiran MS</div>
+                            </div>
+                            <div class="team-section-title">🎯 Delivery Managers & Their Customers</div>
+                            <div class="team-grid">
+                                <div class="team-member">
+                                    <div onclick="toggleCustomers('shripad')">
+                                        <span class="dm-badge">DM</span>Shripad
+                                        <button class="dm-expand-btn" id="shripad-btn">▼</button>
+                                    </div>
+                                    <div class="customer-list" id="shripad-customers">
+                                        <div class="customer-item">🏭 WhiteCap</div>
+                                        <div class="customer-item">🏭 MSC Industrial Supply Co.</div>
+                                        <div class="customer-item">🏭 WK Kellogg Foundation</div>
+                                    </div>
+                                </div>
+                                <div class="team-member">
+                                    <div onclick="toggleCustomers('prakash')">
+                                        <span class="dm-badge">DM</span>Prakash ChandraSati
+                                        <button class="dm-expand-btn" id="prakash-btn">▼</button>
+                                    </div>
+                                    <div class="customer-list" id="prakash-customers">
+                                        <div class="customer-item">🏭 PBF Holding company LLC</div>
+                                        <div class="customer-item">🏭 7-Eleven Inc.</div>
+                                        <div class="customer-item">🏭 BISSELL Homecare, Inc.</div>
+                                        <div class="customer-item">🏭 TMS US PLANO TX</div>
+                                        <div class="customer-item">🏭 Mondelez Global LLC</div>
+                                        <div class="customer-item">🏭 Campbell Soup Company</div>
+                                        <div class="customer-item">🏭 Infinite Electronics, LLC</div>
+                                        <div class="customer-item">🏭 Infinite Electronics, LLC Hosting</div>
+                                    </div>
+                                </div>
+                                <div class="team-member">
+                                    <div onclick="toggleCustomers('chirag')">
+                                        <span class="dm-badge">DM</span>Chirag Jayaram
+                                        <button class="dm-expand-btn" id="chirag-btn">▼</button>
+                                    </div>
+                                    <div class="customer-list" id="chirag-customers">
+                                        <div class="customer-item">🏭 Unilever Europe (UEIT)</div>
+                                        <div class="customer-item">🏭 The Procter & Gamble US Business</div>
+                                        <div class="customer-item">🏭 Unilever</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="business-card animate-on-scroll">
+                    <div class="business-header hitech">
+                        <div class="business-title">🏦 BFSI</div>
+                    </div>
+                    <div class="business-content">
+                        <div class="leadership-tag" onclick="toggleTeamMembers('hitech')">
+                            Customer & Leadership Excellence Team
+                            <button class="expand-btn" id="hitech-btn">▼</button>
+                        </div>
+                        <div class="team-members" id="hitech-team">
+                            <div class="team-section-title">👤 Project Manager</div>
+                            <div class="team-grid" style="grid-template-columns: 1fr;">
+                                <div class="team-member"><span class="pm-badge">PM</span>Mohan Narendra</div>
+                            </div>
+                            <div class="team-section-title">🎯 Delivery Managers & Their Customers</div>
+                            <div class="team-grid">
+                                <div class="team-member">
+                                    <div onclick="toggleCustomers('suresh')">
+                                        <span class="dm-badge">DM</span>Suresh
+                                        <button class="dm-expand-btn" id="suresh-btn">▼</button>
+                                    </div>
+                                    <div class="customer-list" id="suresh-customers">
+                                        <div class="customer-item">🏢 Endurance Services Limited</div>
+                                        <div class="customer-item">🏢 The Andrew W. Mellon Foundation</div>
+                                        <div class="customer-item">🏢 The Ford Foundation</div>
+                                        <div class="customer-item">🏢 Newbury Corp Group Inc</div>
+                                    </div>
+                                </div>
+                                <div class="team-member">
+                                    <div onclick="toggleCustomers('siva-bfsi')">
+                                        <span class="dm-badge">DM</span>Siva
+                                        <button class="dm-expand-btn" id="siva-bfsi-btn">▼</button>
+                                    </div>
+                                    <div class="customer-list" id="siva-bfsi-customers">
+                                        <div class="customer-item">🏢 Harris Associates</div>
+                                        <div class="customer-item">🏢 PineBridge Investments Holdings</div>
+                                        <div class="customer-item">🏢 MacArthur Foundation</div>
+                                    </div>
+                                </div>
+                                <div class="team-member">
+                                    <div onclick="toggleCustomers('jaideep')">
+                                        <span class="dm-badge">DM</span>Jaideep
+                                        <button class="dm-expand-btn" id="jaideep-btn">▼</button>
+                                    </div>
+                                    <div class="customer-list" id="jaideep-customers">
+                                        <div class="customer-item">🏢 PineBridge Investments Holdings</div>
+                                        <div class="customer-item">🏢 MacArthur Foundation</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="business-card animate-on-scroll">
+                    <div class="business-header insurance">
+                        <div class="business-title">🌱 TTH & Lifescience</div>
+                    </div>
+                    <div class="business-content">
+                        <div class="leadership-tag" onclick="toggleTeamMembers('insurance')">
+                            Customer & Leadership Excellence Team
+                            <button class="expand-btn" id="insurance-btn">▼</button>
+                        </div>
+                        <div class="team-members" id="insurance-team">
+                            <div class="team-section-title">👤 Project Manager</div>
+                            <div class="team-grid" style="grid-template-columns: 1fr;">
+                                <div class="team-member"><span class="pm-badge">PM</span>Anoop Chandar</div>
+                            </div>
+                            <div class="team-section-title">🎯 Delivery Managers & Their Customers</div>
+                            <div class="team-grid">
+                                <div class="team-member">
+                                    <div onclick="toggleCustomers('girish')">
+                                        <span class="dm-badge">DM</span>Girish
+                                        <button class="dm-expand-btn" id="girish-btn">▼</button>
+                                    </div>
+                                    <div class="customer-list" id="girish-customers">
+                                        <div class="customer-item">🌱 Veolia Environnement SA</div>
+                                        <div class="customer-item">🌱 Compass Group USA Inc.</div>
+                                        <div class="customer-item">🌱 Avis Budget Car Rental, LLC</div>
+                                        <div class="customer-item">🌱 Lufthansa AirPlus Servicekarten Gmb</div>
+                                        <div class="customer-item">🌱 Molnlycke Health Care AB</div>
+                                        <div class="customer-item">🌱 Soho House UK Limited</div>
+                                        <div class="customer-item">🌱 Molnlycke Health Care AB</div>
+                                        <div class="customer-item">🌱 FMG Shared Services</div>
+                                        <div class="customer-item">🌱 Veolia Umweltservice GmbH</div>
+                                        <div class="customer-item">🌱 Yokogawa India Limited</div>
+                                    </div>
+                                </div>
+                                <div class="team-member">
+                                    <div onclick="toggleCustomers('baranidharan')">
+                                        <span class="dm-badge">DM</span>Baranidharan G
+                                        <button class="dm-expand-btn" id="baranidharan-btn">▼</button>
+                                    </div>
+                                    <div class="customer-list" id="baranidharan-customers">
+                                        <div class="customer-item">🌱 MARRIOTT INTERNATIONAL, Inc.</div>
+                                        <div class="customer-item">🌱 SSP Financing UK Limited</div>
+                                    </div>
+                                </div>
+                                <div class="team-member">
+                                    <div onclick="toggleCustomers('preeti')">
+                                        <span class="dm-badge">DM</span>Preeti
+                                        <button class="dm-expand-btn" id="preeti-btn">▼</button>
+                                    </div>
+                                    <div class="customer-list" id="preeti-customers">
+                                        <div class="customer-item">🌱 Veolia Umweltservice GmbH</div>
+                                    </div>
+                                </div>
+                                <div class="team-member">
+                                    <div onclick="toggleCustomers('yoganand')">
+                                        <span class="dm-badge">DM</span>Yoganand Laddagiri
+                                        <button class="dm-expand-btn" id="yoganand-btn">▼</button>
+                                    </div>
+                                    <div class="customer-list" id="yoganand-customers">
+                                        <div class="customer-item">🌱 Millennium & Copthorne</div>
+                                        <div class="customer-item">🌱 Milleneum Hotels & Resorts international ltd</div>
+                                        <div class="customer-item">🌱 SSP Financing UK Limited</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer" id="contact">
+        <div class="footer-content">
+            <div class="footer-links">
+                <a href="#privacy">Privacy Policy</a>
+                <a href="#terms">Terms of Service</a>
+                <a href="#support">24/7 Support</a>
+                <a href="#careers">Join Our Team</a>
+                <a href="#contact">Get In Touch</a>
+            </div>
+            <p style="color: rgba(255, 255, 255, 0.7); font-size: 1.1rem; margin-top: 1rem;">
+                &copy; 2025 SPACE Platform. Transforming the future, one innovation at a time. ✨
+            </p>
+        </div>
+    </footer>
+
+    <script>
+        // Create floating particles
+        function createParticles() {
+            const particlesContainer = document.getElementById('particles');
+            const particleCount = 50;
+
+            for (let i = 0; i < particleCount; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                particle.style.left = Math.random() * 100 + '%';
+                particle.style.animationDelay = Math.random() * 6 + 's';
+                particle.style.animationDuration = (Math.random() * 3 + 3) + 's';
+                particlesContainer.appendChild(particle);
+            }
+        }
+
+        // Initialize particles
+        createParticles();
+
+        // Smooth scrolling
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Enhanced scroll animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -100px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                    
+                    // Add staggered animation for grid items
+                    if (entry.target.parentElement.classList.contains('benefits-grid') || 
+                        entry.target.parentElement.classList.contains('business-grid')) {
+                        const delay = Array.from(entry.target.parentElement.children).indexOf(entry.target) * 100;
+                        entry.target.style.transitionDelay = delay + 'ms';
+                    }
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.animate-on-scroll').forEach(el => {
+            observer.observe(el);
+        });
+
+        // Dynamic navbar effects
+        let lastScrollY = window.scrollY;
+        const navbar = document.getElementById('navbar');
+
+        window.addEventListener('scroll', () => {
+            const currentScrollY = window.scrollY;
+            
+            if (currentScrollY > 100) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+
+            // Hide/show navbar on scroll
+            if (currentScrollY > lastScrollY && currentScrollY > 200) {
+                navbar.style.transform = 'translateY(-100%)';
+            } else {
+                navbar.style.transform = 'translateY(0)';
+            }
+            
+            lastScrollY = currentScrollY;
+        });
+
+        // Interactive card effects with mouse tracking
+        document.querySelectorAll('.benefit-card, .business-card').forEach(card => {
+            card.addEventListener('mousemove', (e) => {
+                const rect = card.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                
+                const centerX = rect.width / 2;
+                const centerY = rect.height / 2;
+                
+                const rotateX = (y - centerY) / 10;
+                const rotateY = (centerX - x) / 10;
+                
+                card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateZ(20px)`;
+            });
+            
+            card.addEventListener('mouseleave', () => {
+                card.style.transform = 'perspective(1000px) rotateX(0) rotateY(0) translateZ(0)';
+            });
+        });
+
+        // Random color cycling for hero elements
+        setInterval(() => {
+            const glowElements = document.querySelectorAll('.glow-text');
+            glowElements.forEach(element => {
+                const colors = ['#ff006e', '#8338ec', '#3a86ff', '#06ffa5', '#ffbe0b'];
+                const randomColor = colors[Math.floor(Math.random() * colors.length)];
+                element.style.textShadow = `
+                    0 0 10px ${randomColor}50,
+                    0 0 20px ${randomColor}30,
+                    0 0 30px ${randomColor}20
+                `;
+            });
+        }, 3000);
+
+        // Parallax effect for hero section
+        window.addEventListener('scroll', () => {
+            const scrolled = window.pageYOffset;
+            const hero = document.querySelector('.hero');
+            const heroContent = document.querySelector('.hero-content');
+            
+            if (hero && heroContent) {
+                heroContent.style.transform = `translateY(${scrolled * 0.3}px)`;
+            }
+        });
+
+        // Dynamic particle generation
+        let particleInterval = setInterval(() => {
+            if (document.querySelectorAll('.particle').length < 100) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                particle.style.left = Math.random() * 100 + '%';
+                particle.style.animationDelay = '0s';
+                particle.style.animationDuration = (Math.random() * 3 + 3) + 's';
+                
+                // Random colors for particles
+                const colors = ['rgba(255, 0, 110, 0.8)', 'rgba(131, 56, 236, 0.8)', 'rgba(58, 134, 255, 0.8)', 'rgba(6, 255, 165, 0.8)'];
+                particle.style.background = colors[Math.floor(Math.random() * colors.length)];
+                
+                document.getElementById('particles').appendChild(particle);
+                
+                // Remove particle after animation
+                setTimeout(() => {
+                    if (particle.parentNode) {
+                        particle.parentNode.removeChild(particle);
+                    }
+                }, 6000);
+            }
+        }, 200);
+
+        // Easter egg: Konami code activation
+        let konamiCode = [38, 38, 40, 40, 37, 39, 37, 39, 66, 65];
+        let konamiIndex = 0;
+
+        document.addEventListener('keydown', (e) => {
+            if (e.keyCode === konamiCode[konamiIndex]) {
+                konamiIndex++;
+                if (konamiIndex === konamiCode.length) {
+                    // Activate party mode!
+                    document.body.style.filter = 'hue-rotate(180deg) saturate(2)';
+                    setTimeout(() => {
+                        document.body.style.filter = 'none';
+                    }, 5000);
+                    
+                    // Show celebration message
+                    const celebration = document.createElement('div');
+                    celebration.innerHTML = '🎉 PARTY MODE ACTIVATED! 🎉';
+                    celebration.style.cssText = `
+                        position: fixed;
+                        top: 50%;
+                        left: 50%;
+                        transform: translate(-50%, -50%);
+                        font-size: 3rem;
+                        font-weight: bold;
+                        color: #ff006e;
+                        z-index: 10000;
+                        animation: pulse 1s ease-in-out 5;
+                    `;
+                    document.body.appendChild(celebration);
+                    
+                    setTimeout(() => {
+                        celebration.remove();
+                    }, 5000);
+                    
+                    konamiIndex = 0;
+                }
+            } else {
+                konamiIndex = 0;
+            }
+        });
+
+        // Performance optimization: Throttle scroll events
+        function throttle(func, limit) {
+            let inThrottle;
+            return function() {
+                const args = arguments;
+                const context = this;
+                if (!inThrottle) {
+                    func.apply(context, args);
+                    inThrottle = true;
+                    setTimeout(() => inThrottle = false, limit);
+                }
+            }
+        }
+
+        // Apply throttling to scroll-heavy functions
+        window.addEventListener('scroll', throttle(() => {
+            // Existing scroll logic here is already optimized
+        }, 16)); // ~60fps
+
+        // Cleanup particles periodically to prevent memory leaks
+        setInterval(() => {
+            const particles = document.querySelectorAll('.particle');
+            if (particles.length > 150) {
+                particles.slice(0, 50).forEach(particle => {
+                    if (particle.parentNode) {
+                        particle.parentNode.removeChild(particle);
+                    }
+                });
+            }
+        }, 10000);
+
+        // Function to toggle team members visibility
+        function toggleTeamMembers(vertical) {
+            const teamSection = document.getElementById(`${vertical}-team`);
+            const button = document.getElementById(`${vertical}-btn`);
+            
+            if (teamSection.classList.contains('show')) {
+                teamSection.classList.remove('show');
+                button.classList.remove('rotated');
+                button.textContent = '▼';
+            } else {
+                // Close all other sections first
+                document.querySelectorAll('.team-members').forEach(section => {
+                    section.classList.remove('show');
+                });
+                document.querySelectorAll('.expand-btn').forEach(btn => {
+                    btn.classList.remove('rotated');
+                    btn.textContent = '▼';
+                });
+                
+                // Open the clicked section
+                teamSection.classList.add('show');
+                button.classList.add('rotated');
+                button.textContent = '▲';
+            }
+        }
+
+        // Function to toggle customer list for DMs
+        function toggleCustomers(dmId) {
+            console.log('Toggling customers for:', dmId); // Debug log
+            
+            const customerList = document.getElementById(`${dmId}-customers`);
+            const button = document.getElementById(`${dmId}-btn`);
+            
+            if (!customerList || !button) {
+                console.error('Elements not found:', dmId);
+                return;
+            }
+            
+            if (customerList.classList.contains('show')) {
+                customerList.classList.remove('show');
+                button.classList.remove('rotated');
+                button.textContent = '▼';
+            } else {
+                // Close all other customer lists
+                document.querySelectorAll('.customer-list').forEach(list => {
+                    list.classList.remove('show');
+                });
+                document.querySelectorAll('.dm-expand-btn').forEach(btn => {
+                    btn.classList.remove('rotated');
+                    btn.textContent = '▼';
+                });
+                
+                // Open the clicked customer list
+                customerList.classList.add('show');
+                button.classList.add('rotated');
+                button.textContent = '▲';
+            }
+        }
+
+        // Make the functions globally available
+        window.toggleTeamMembers = toggleTeamMembers;
+        window.toggleCustomers = toggleCustomers;
+    </script>
+</body>
+</html>
+            
